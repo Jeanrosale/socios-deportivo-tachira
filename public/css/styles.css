@@ -1,0 +1,221 @@
+/* ============================================================
+   ARCHIVO: public/css/styles.css
+   PAPEL:   Estilo comun de todas las paginas (colores del Tachira).
+   LO USAN: registro.html y las demas paginas
+   ============================================================ */
+
+/* ---------- COLORES (variables) ---------- */
+:root {
+    --fondo: #0d1117;
+    --tarjeta: #161b22;
+    --borde: #2a2e39;
+    --texto: #e0e0e0;
+    --texto-suave: #8b949e;
+    --amarillo: #FFD400;
+    --amarillo-oscuro: #e6bf00;
+    --rojo: #B00000;
+    --rojo-claro: #ff6b6b;
+    --naranja: #e67e22;
+    --verde: #1E8A4C;
+    --verde-claro: #2ecc71;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 32px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0a0c10 100%);
+}
+
+a { color: var(--amarillo); }
+
+/* ---------- TARJETA Y ENCABEZADO ---------- */
+.tarjeta {
+    width: 100%;
+    max-width: 480px;
+    padding: 24px;
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-top: 4px solid var(--amarillo);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+.marca { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.marca img { height: 64px; }
+.marca h1 { margin: 0; color: var(--amarillo); font-size: 1.4rem; }
+.marca p { margin: 2px 0 0; color: var(--texto-suave); font-size: 0.9rem; }
+
+/* ---------- CAMPOS ---------- */
+.campo { margin-bottom: 14px; }
+label { display: block; margin-bottom: 5px; font-size: 0.9rem; font-weight: 600; }
+
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="password"], input[type="date"], select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--texto);
+    background: var(--fondo);
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--amarillo);
+    box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.2);
+}
+/* Calendario con colores oscuros */
+input[type="date"] { color-scheme: dark; }
+
+/* Campo con error y su mensaje */
+.invalido { border-color: var(--rojo-claro) !important; }
+.error { display: block; min-height: 1em; margin-top: 4px; font-size: 0.8rem; color: var(--rojo-claro); }
+
+/* Celular con +57 y contrasenas con boton Ver */
+.conPrefijo, .conBoton { display: flex; gap: 6px; }
+.conPrefijo span {
+    display: flex; align-items: center; padding: 0 12px;
+    background: #000; color: var(--amarillo); font-weight: 600;
+    border: 1px solid #444; border-radius: 8px;
+}
+.botonVer {
+    flex: 0 0 auto; padding: 0 14px; cursor: pointer;
+    color: var(--texto); background: rgba(255, 255, 255, 0.08);
+    border: 1px solid #444; border-radius: 8px;
+}
+.botonVer:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* Casilla de terminos */
+.casilla { display: flex; gap: 8px; align-items: flex-start; font-weight: 400; }
+.casilla input { margin-top: 3px; accent-color: var(--amarillo); }
+
+/* ---------- MEDIDOR DE CONTRASENA ---------- */
+.medidor { height: 6px; margin-top: 8px; background: rgba(255, 255, 255, 0.12); border-radius: 999px; overflow: hidden; }
+#barraMedidor { height: 100%; width: 0; transition: width 0.3s, background-color 0.3s; }
+.nivel1 { background: var(--rojo-claro); }   /* Debil */
+.nivel2 { background: var(--naranja); }      /* Media */
+.nivel3 { background: var(--amarillo); }     /* Aceptable */
+.nivel4 { background: var(--verde-claro); }  /* Fuerte */
+.textoMedidor { display: block; margin-top: 4px; font-size: 0.8rem; color: var(--texto-suave); }
+
+/* ---------- BOTON PRINCIPAL (pildora) ---------- */
+.boton {
+    width: 100%; padding: 12px; cursor: pointer;
+    font-size: 1rem; font-weight: 700; color: #000;
+    background: var(--amarillo); border: none; border-radius: 999px;
+    transition: transform 0.1s, background-color 0.2s;
+}
+.boton:hover { background: var(--amarillo-oscuro); transform: translateY(-2px); }
+.boton:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+/* Boton que se ve como enlace ("Inicia sesion") */
+.botonEnlace {
+    padding: 0; cursor: pointer;
+    font: inherit; font-weight: 700; color: var(--amarillo);
+    background: none; border: none; text-decoration: underline;
+}
+.botonEnlace:hover { color: var(--amarillo-oscuro); }
+
+/* ---------- AVISO GENERAL (arriba del formulario) ---------- */
+.aviso { margin-bottom: 16px; padding: 10px 12px; border-radius: 8px; font-size: 0.9rem; }
+.aviso.error { color: #ffb3b3; background: rgba(176, 0, 0, 0.2); border: 1px solid var(--rojo); }
+.aviso.exito { color: #b6f2cc; background: rgba(30, 138, 76, 0.2); border: 1px solid var(--verde); }
+
+.pie { margin: 16px 0 0; text-align: center; font-size: 0.9rem; color: var(--texto-suave); }
+
+/* ---------- VENTANA EMERGENTE (inicio de sesion) ---------- */
+/* El dialog no lleva padding: asi un clic en el fondo oscuro se distingue
+   de un clic dentro de la ventana (el padding va en .contenidoVentana). */
+.ventana {
+    width: calc(100% - 32px);
+    max-width: 420px;
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    overflow: auto;
+    color: var(--texto);
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-top: 4px solid var(--amarillo);
+    border-radius: 14px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
+}
+/* Fondo oscuro detras de la ventana */
+.ventana::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+.contenidoVentana { padding: 24px; }
+.cabeceraVentana { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.cabeceraVentana h2 { margin: 0; color: var(--amarillo); font-size: 1.25rem; }
+.botonCerrar {
+    padding: 0 6px; cursor: pointer; line-height: 1;
+    font-size: 1.8rem; color: var(--texto-suave);
+    background: none; border: none; border-radius: 6px;
+}
+.botonCerrar:hover { color: var(--texto); background: rgba(255, 255, 255, 0.08); }
+
+/* ---------- RETO DE IMAGENES (verificacion humana del login) ---------- */
+/* Recuadro que agrupa la instruccion y las imagenes */
+.reto {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
+    border-radius: 10px;
+}
+.cabeceraReto { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 0.95rem; }
+/* Nombre del objeto pedido, resaltado en amarillo (ej. BALON) */
+.objetoReto { color: var(--amarillo); font-weight: 800; letter-spacing: 0.5px; }
+
+/* Boton redondo de recargar */
+.botonRecargar {
+    flex: 0 0 auto; width: 34px; height: 34px; cursor: pointer;
+    font-size: 0.95rem; color: var(--texto);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid #444; border-radius: 50%;
+    transition: transform 0.3s, background-color 0.2s;
+}
+.botonRecargar:hover { background: rgba(255, 255, 255, 0.15); transform: rotate(90deg); }
+
+/* Las imagenes en una fila de cuadros iguales */
+.opcionesReto { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.opcionReto {
+    aspect-ratio: 1;
+    cursor: pointer;
+    font-size: 1.7rem;
+    color: var(--texto);
+    background: var(--fondo);
+    border: 2px solid #444;
+    border-radius: 10px;
+    transition: border-color 0.15s, transform 0.1s;
+}
+.opcionReto:hover { border-color: var(--amarillo-oscuro); transform: translateY(-2px); }
+/* La imagen que eligio el socio */
+.opcionReto.seleccionada {
+    color: var(--amarillo);
+    background: rgba(255, 212, 0, 0.12);
+    border-color: var(--amarillo);
+}
+/* ---------- RECUPERACION DE CONTRASENA Y AVISOS DEL LOGIN ---------- */
+/* Seguridad visual: cualquier elemento con el atributo hidden queda oculto,
+   aunque otra regla le ponga display. */
+[hidden] { display: none !important; }
+
+/* Barra del medidor de la ventana de recuperacion (igual a la del registro) */
+#barraRecuperar { height: 100%; width: 0; transition: width 0.3s, background-color 0.3s; }
+
+/* Texto de instruccion bajo el titulo de la ventana */
+.instruccion { margin: 0 0 14px; font-size: 0.9rem; color: var(--texto-suave); }
+
+/* Fila de enlaces al pie de la ventana ("Cambiar correo" / "Reenviar codigo") */
+.enlacesVentana { display: flex; justify-content: space-between; gap: 10px; margin: 14px 0 0; font-size: 0.9rem; }
+
+/* Boton "Reenviar enlace de confirmacion" debajo del aviso del login */
+.botonReenviar { margin: -6px 0 16px; font-size: 0.9rem; }

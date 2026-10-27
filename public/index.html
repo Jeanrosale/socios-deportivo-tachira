@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal del Socio - Deportivo Táchira</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Estilo propio del portal. Usa los colores (variables) de styles.css. -->
+    <style>
+        body.portal { display: block; padding: 0; }
+
+        /* ---------- BARRA SUPERIOR ---------- */
+        .barra {
+            position: sticky; top: 0; z-index: 10;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 24px;
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 2px solid var(--amarillo);
+        }
+        .barraMarca { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--amarillo); }
+        .barraMarca img { height: 42px; }
+        .botonSalir {
+            padding: 8px 18px; font-weight: 700; cursor: pointer;
+            color: var(--amarillo); background: transparent;
+            border: 2px solid var(--amarillo); border-radius: 999px;
+        }
+        .botonSalir:hover { color: #000; background: var(--amarillo); }
+
+        .contenido { max-width: 1040px; margin: 0 auto; padding: 32px 16px 48px; }
+
+        /* ---------- BIENVENIDA + CARNET ---------- */
+        .cabecera { display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: center; }
+        .cabecera h1 { margin: 0 0 6px; font-size: 2.4rem; color: var(--amarillo); }
+        .cabecera p { margin: 0; color: var(--texto-suave); }
+
+        /* El carnet: la pieza llamativa de la pagina, en los colores del club */
+        .carnet {
+            position: relative; overflow: hidden;
+            padding: 22px;
+            color: #000;
+            background: repeating-linear-gradient(90deg, #FFD400 0 34px, #f2c900 34px 68px);
+            border-radius: 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        }
+        .carnet::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 44px; background: #000;
+        }
+        .carnetArriba { display: flex; justify-content: space-between; align-items: flex-start; }
+        .carnetArriba img { height: 64px; }
+        .carnetTipo { font-size: 0.8rem; font-weight: 700; }
+        .carnetNombre { margin: 18px 0 2px; font-size: 1.35rem; font-weight: 800; }
+        .carnetUsuario { margin: 0 0 14px; font-weight: 600; }
+        .carnetDatos { display: flex; gap: 24px; margin-bottom: 30px; font-size: 0.85rem; }
+        .carnetDatos b { display: block; font-size: 1rem; }
+        .carnetPie {
+            position: absolute; left: 22px; right: 22px; bottom: 12px; z-index: 1;
+            display: flex; justify-content: space-between;
+            color: var(--amarillo); font-size: 0.8rem; font-weight: 700;
+        }
+
+        /* ---------- BLOQUES ---------- */
+        .bloques { display: grid; grid-template-columns: 3fr 2fr; gap: 24px; margin-top: 40px; }
+        .bloque { padding: 22px; background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 14px; }
+        .bloque h2 { margin: 0 0 16px; font-size: 1.15rem; color: var(--amarillo); }
+
+        .beneficios { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+        .beneficios li { display: flex; gap: 12px; }
+        .beneficios .icono { font-size: 1.4rem; }
+        .beneficios b { display: block; }
+        .beneficios span { color: var(--texto-suave); font-size: 0.9rem; }
+
+        .datosClub { display: grid; grid-template-columns: max-content 1fr; gap: 10px 18px; margin: 0; }
+        .datosClub dt { color: var(--texto-suave); }
+        .datosClub dd { margin: 0; font-weight: 600; }
+
+        .accesos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+        .acceso {
+            padding: 18px 14px; text-align: center; text-decoration: none; color: var(--texto);
+            background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 12px;
+        }
+        .acceso:hover { border-color: var(--amarillo); }
+        .acceso .icono { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+
+        .nota { margin-top: 32px; text-align: center; font-size: 0.8rem; color: var(--texto-suave); }
+
+        @media (max-width: 860px) {
+            .cabecera, .bloques { grid-template-columns: 1fr; }
+            .accesos { grid-template-columns: repeat(2, 1fr); }
+            .cabecera h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body class="portal">
+
+    <header class="barra">
+        <div class="barraMarca">
+            <img src="img/logo_tachira.png" alt="Escudo Deportivo Táchira">
+            <span>Portal del Socio</span>
+        </div>
+        <button type="button" id="botonSalir" class="botonSalir">Cerrar sesión</button>
+    </header>
+
+    <!-- No se muestra nada hasta que el servidor confirme la sesion -->
+    <main class="contenido" id="contenido" hidden>
+
+        <!-- Bienvenida y carnet digital -->
+        <section class="cabecera">
+            <div>
+                <h1 id="saludo"></h1>
+                <p id="ingreso"></p>
+            </div>
+
+            <div class="carnet" aria-label="Carnet digital de socio">
+                <div class="carnetArriba">
+                    <span class="carnetTipo">CARNET DE SOCIO</span>
+                    <img src="img/logo_tachira.png" alt="">
+                </div>
+                <p class="carnetNombre" id="carnetNombre"></p>
+                <p class="carnetUsuario" id="carnetUsuario"></p>
+                <div class="carnetDatos">
+                    <div>Categoría <b>Aurinegro</b></div>
+                    <div>Socio desde <b id="carnetDesde"></b></div>
+                </div>
+                <div class="carnetPie">
+                    <span>DEPORTIVO TÁCHIRA F.C.</span>
+                    <span>San Cristóbal</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Beneficios y datos del club -->
+        <div class="bloques">
+            <section class="bloque">
+                <h2>Tus beneficios de socio</h2>
+                <ul class="beneficios">
+                    <li><span class="icono" aria-hidden="true">🎟️</span><div><b>Preventa de entradas</b><span>Compra tus boletas para el Polideportivo antes que el público general.</span></div></li>
+                    <li><span class="icono" aria-hidden="true">👕</span><div><b>Descuento en la tienda oficial</b><span>Camisetas, chaquetas y artículos del club con precio de socio.</span></div></li>
+                    <li><span class="icono" aria-hidden="true">⚽</span><div><b>Entrenamientos abiertos</b><span>Acceso a las prácticas abiertas del primer equipo.</span></div></li>
+                    <li><span class="icono" aria-hidden="true">🎁</span><div><b>Sorteos exclusivos</b><span>Camisetas firmadas y encuentros con el plantel.</span></div></li>
+                </ul>
+            </section>
+
+            <section class="bloque">
+                <h2>El club</h2>
+                <dl class="datosClub">
+                    <dt>Apodo</dt><dd>Carrusel Aurinegro</dd>
+                    <dt>Fundación</dt><dd>1974</dd>
+                    <dt>Estadio</dt><dd>Polideportivo de Pueblo Nuevo</dd>
+                    <dt>Ciudad</dt><dd>San Cristóbal, Táchira</dd>
+                    <dt>Colores</dt><dd>Amarillo y negro</dd>
+                </dl>
+            </section>
+        </div>
+
+        <!-- Accesos rapidos -->
+        <nav class="accesos" aria-label="Accesos rápidos">
+            <a class="acceso" href="#"><span class="icono" aria-hidden="true">📅</span>Calendario</a>
+            <a class="acceso" href="#"><span class="icono" aria-hidden="true">🛒</span>Tienda</a>
+            <a class="acceso" href="#"><span class="icono" aria-hidden="true">📰</span>Noticias</a>
+            <a class="acceso" href="#"><span class="icono" aria-hidden="true">👥</span>Plantel</a>
+        </nav>
+
+        <p class="nota">Proyecto académico. Los beneficios y accesos son de ejemplo.</p>
+    </main>
+
+    <script>
+        // ============================================================
+        // Portal del socio: pide al servidor los datos del socio.
+        // Si no hay sesion, el servidor no entrega datos y se vuelve al registro.
+        // ============================================================
+
+        // "jean carlo rosales corzo" -> "Jean Carlo Rosales Corzo"
+        function conMayusculas(nombre)
+        {
+            return nombre.split(" ").map(function (palabra)
+            {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+            }).join(" ");
+        }
+
+        function formatoFecha(texto, conHora)
+        {
+            let opciones = conHora ? { dateStyle: "long", timeStyle: "short" } : { month: "short", year: "numeric" };
+            return new Date(texto).toLocaleString("es-CO", opciones);
+        }
+
+        async function cargarPortal()
+        {
+            let respuesta = await fetch("/api/perfil");
+            if (respuesta.status !== 200)
+            {
+                location.href = "registro.html?aviso=sesionVencida";
+                return;
+            }
+
+            let socio = await respuesta.json();
+            let nombre = conMayusculas(socio.nombre);
+            let primerosNombres = nombre.split(" ").slice(0, 2).join(" ");
+
+            // textContent (no innerHTML): si un nombre trae "<script>", se ve como texto y no se ejecuta.
+            document.querySelector("#saludo").textContent = "¡Bienvenido, " + primerosNombres + "!";
+            document.querySelector("#ingreso").textContent = socio.ingresoAnterior
+                ? "Tu ingreso anterior fue el " + formatoFecha(socio.ingresoAnterior, true) + "."
+                : "Este es tu primer ingreso al portal. ¡Vamos Táchira!";
+            document.querySelector("#carnetNombre").textContent = nombre;
+            document.querySelector("#carnetUsuario").textContent = "@" + socio.usuario;
+            document.querySelector("#carnetDesde").textContent = formatoFecha(socio.fechaRegistro, false);
+
+            document.querySelector("#contenido").hidden = false;
+        }
+
+        document.querySelector("#botonSalir").addEventListener("click", async function ()
+        {
+            await fetch("/api/salir", { method: "POST" });
+            location.href = "registro.html?aviso=sesionCerrada";
+        });
+
+        cargarPortal();
+    </script>
+</body>
+</html>

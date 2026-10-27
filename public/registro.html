@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de socios - Deportivo Táchira</title>
+    <!-- Libreria de iconos Font Awesome (version gratuita): dibujos del reto de imagenes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <main class="tarjeta">
+
+        <header class="marca">
+            <img src="img/logo_tachira.png" alt="Escudo Deportivo Táchira">
+            <div>
+                <h1>Registro de socios</h1>
+                <p>Deportivo Táchira</p>
+            </div>
+        </header>
+
+        <!-- ==================== REGISTRO ==================== -->
+
+        <div id="avisoGeneral" class="aviso" hidden></div>
+
+        <form id="formRegistro" novalidate>
+
+            <div class="campo">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" autocomplete="name">
+                <small class="error" id="error-nombre"></small>
+            </div>
+
+            <div class="campo">
+                <label for="usuario">Nombre de usuario</label>
+                <input type="text" id="usuario" autocomplete="username">
+                <small class="error" id="error-usuario"></small>
+            </div>
+
+            <div class="campo">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" id="correo" autocomplete="email">
+                <small class="error" id="error-correo"></small>
+            </div>
+
+            <div class="campo">
+                <label for="tipoDocumento">Tipo de documento</label>
+                <select id="tipoDocumento">
+                    <option value="">Selecciona</option>
+                </select>
+                <small class="error" id="error-tipoDocumento"></small>
+            </div>
+
+            <div class="campo">
+                <label for="documento">Número de documento</label>
+                <input type="text" id="documento" inputmode="numeric">
+                <small class="error" id="error-documento"></small>
+            </div>
+
+            <div class="campo">
+                <label for="telefono">Celular</label>
+                <div class="conPrefijo">
+                    <span id="indicativo"></span>
+                    <input type="tel" id="telefono" inputmode="numeric" autocomplete="tel-national">
+                </div>
+                <small class="error" id="error-telefono"></small>
+            </div>
+
+            <div class="campo">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input type="date" id="fechaNacimiento">
+                <small class="error" id="error-fechaNacimiento"></small>
+            </div>
+
+            <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <div class="conBoton">
+                    <input type="password" id="contrasena" autocomplete="new-password">
+                    <button type="button" class="botonVer" data-para="contrasena">Ver</button>
+                </div>
+                <div class="medidor"><div id="barraMedidor"></div></div>
+                <small class="textoMedidor" id="textoMedidor"></small>
+                <small class="error" id="error-contrasena"></small>
+            </div>
+
+            <div class="campo">
+                <label for="confirmarContrasena">Confirmar contraseña</label>
+                <div class="conBoton">
+                    <input type="password" id="confirmarContrasena" autocomplete="new-password">
+                    <button type="button" class="botonVer" data-para="confirmarContrasena">Ver</button>
+                </div>
+                <small class="error" id="error-confirmarContrasena"></small>
+            </div>
+
+            <div class="campo">
+                <label class="casilla">
+                    <input type="checkbox" id="terminos">
+                    <span>Acepto los <a href="terminos.html" target="_blank" rel="noopener">términos y condiciones</a></span>
+                </label>
+                <small class="error" id="error-terminos"></small>
+            </div>
+
+            <button type="submit" id="botonRegistrar" class="boton">Registrarme</button>
+        </form>
+
+        <!-- Boton que abre la ventana emergente del inicio de sesion -->
+        <p class="pie">
+            ¿Ya eres socio?
+            <button type="button" id="botonAbrirLogin" class="botonEnlace">Inicia sesión</button>
+        </p>
+    </main>
+
+    <!-- ==================== INICIO DE SESION (ventana emergente) ==================== -->
+    <!-- dialog es la ventana emergente propia de HTML: oscurece el fondo y se cierra con Esc -->
+
+    <dialog id="ventanaLogin" class="ventana" aria-labelledby="tituloLogin">
+        <div class="contenidoVentana">
+
+            <div class="cabeceraVentana">
+                <h2 id="tituloLogin">Inicio de sesión</h2>
+                <button type="button" id="botonCerrarLogin" class="botonCerrar" aria-label="Cerrar">&times;</button>
+            </div>
+
+            <div id="avisoLogin" class="aviso" hidden></div>
+
+            <!-- Solo aparece si la cuenta no esta confirmada o el enlace del correo vencio -->
+            <button type="button" id="botonReenviar" class="botonEnlace botonReenviar" hidden>Reenviar enlace de confirmación</button>
+
+            <form id="formLogin" novalidate>
+                <div class="campo">
+                    <label for="loginCorreo">Correo electrónico</label>
+                    <input type="email" id="loginCorreo" autocomplete="email">
+                    <small class="error" id="error-loginCorreo"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="loginContrasena">Contraseña</label>
+                    <div class="conBoton">
+                        <input type="password" id="loginContrasena" autocomplete="current-password">
+                        <button type="button" class="botonVer" data-para="loginContrasena">Ver</button>
+                    </div>
+                    <small class="error" id="error-loginContrasena"></small>
+                </div>
+
+                <!-- Reto de imagenes: lo llena registro.js con lo que entrega GET /api/reto.
+                     Queda oculto si el servidor dice que la verificacion esta apagada. -->
+                <div class="campo" id="bloqueReto" hidden>
+                    <div class="reto" id="verificacion">
+                        <div class="cabeceraReto">
+                            <button type="button" id="botonRecargarReto" class="botonRecargar">
+                                <i class="fa-solid fa-rotate"></i>
+                            </button>
+                            <span><span id="instruccionReto"></span> <span id="objetoReto" class="objetoReto"></span></span>
+                        </div>
+                        <div id="opcionesReto" class="opcionesReto" role="group"></div>
+                    </div>
+                    <small class="error" id="error-verificacion"></small>
+                </div>
+
+                <button type="submit" id="botonIniciar" class="boton">Iniciar sesión</button>
+            </form>
+
+            <!-- Abre la ventana de recuperacion -->
+            <p class="pie">
+                <button type="button" id="botonOlvide" class="botonEnlace">¿Olvidaste tu contraseña?</button>
+            </p>
+
+        </div>
+    </dialog>
+
+    <!-- ==================== RECUPERAR CONTRASENA (ventana emergente) ==================== -->
+    <!-- Pizarron - "Olvide la contrasena": correo -> codigo de 6 digitos -> nueva contrasena.
+         Tiene dos pasos (dos formularios); registro.js muestra uno a la vez. -->
+
+    <dialog id="ventanaRecuperar" class="ventana" aria-labelledby="tituloRecuperar">
+        <div class="contenidoVentana">
+
+            <div class="cabeceraVentana">
+                <h2 id="tituloRecuperar">Recuperar contraseña</h2>
+                <button type="button" id="botonCerrarRecuperar" class="botonCerrar" aria-label="Cerrar">&times;</button>
+            </div>
+
+            <div id="avisoRecuperar" class="aviso" hidden></div>
+
+            <!-- Paso 1: pedir el codigo con el correo -->
+            <form id="formPedirCodigo" novalidate>
+                <div class="campo">
+                    <label for="recCorreo">Correo electrónico</label>
+                    <input type="email" id="recCorreo" autocomplete="email">
+                    <small class="error" id="error-recCorreo"></small>
+                </div>
+
+                <button type="submit" id="botonPedirCodigo" class="boton">Enviar código</button>
+            </form>
+
+            <!-- Paso 2: codigo + nueva contrasena + repetirla -->
+            <form id="formCambiarContrasena" novalidate hidden>
+                <p class="instruccion" id="instruccionCodigo"></p>
+
+                <div class="campo">
+                    <label for="recCodigo">Código</label>
+                    <input type="text" id="recCodigo" inputmode="numeric" autocomplete="one-time-code">
+                    <small class="error" id="error-recCodigo"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="recContrasena">Nueva contraseña</label>
+                    <div class="conBoton">
+                        <input type="password" id="recContrasena" autocomplete="new-password">
+                        <button type="button" class="botonVer" data-para="recContrasena">Ver</button>
+                    </div>
+                    <div class="medidor"><div id="barraRecuperar"></div></div>
+                    <small class="textoMedidor" id="textoRecuperar"></small>
+                    <small class="error" id="error-recContrasena"></small>
+                </div>
+
+                <div class="campo">
+                    <label for="recConfirmar">Repetir contraseña</label>
+                    <div class="conBoton">
+                        <input type="password" id="recConfirmar" autocomplete="new-password">
+                        <button type="button" class="botonVer" data-para="recConfirmar">Ver</button>
+                    </div>
+                    <small class="error" id="error-recConfirmar"></small>
+                </div>
+
+                <button type="submit" id="botonCambiarContrasena" class="boton">Cambiar contraseña</button>
+
+                <p class="enlacesVentana">
+                    <button type="button" id="botonVolverCorreo" class="botonEnlace">Cambiar correo</button>
+                    <button type="button" id="botonReenviarCodigo" class="botonEnlace">Reenviar código</button>
+                </p>
+            </form>
+
+        </div>
+    </dialog>
+
+    <script src="/shared/reglas.js"></script>
+    <script src="/shared/mensajes.js"></script>
+    <script src="/shared/validaciones.js"></script>
+    <script src="js/registro.js"></script>
+</body>
+</html>

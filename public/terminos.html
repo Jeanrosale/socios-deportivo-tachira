@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- ============================================================
+     ARCHIVO: public/terminos.html
+     PAPEL:   Terminos y condiciones que el socio acepta al registrarse.
+              Se abre en otra pestana (el formulario no se pierde) y se
+              puede descargar en PDF con la opcion de imprimir del navegador.
+     USA:     css/styles.css y /shared/reglas.js (edades, intentos y tiempos)
+     LO USA:  registro.html (enlace "terminos y condiciones")
+     ============================================================ -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y condiciones - Deportivo Táchira</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Estilos solo de esta pagina (no se agregan a styles.css) -->
+    <style>
+        .tarjeta { max-width: 760px; }
+        .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .acciones .boton { width: auto; padding: 10px 20px; }
+        .botonSecundario {
+            padding: 10px 20px; cursor: pointer;
+            font-size: 1rem; font-weight: 700; color: var(--texto);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid #444; border-radius: 999px;
+        }
+        .botonSecundario:hover { background: rgba(255, 255, 255, 0.15); }
+        .fecha { margin: 0 0 16px; font-size: 0.85rem; color: var(--texto-suave); }
+
+        .avisoAcademico {
+            margin-bottom: 24px; padding: 12px 14px; border-radius: 8px;
+            font-size: 0.9rem; line-height: 1.5;
+            background: rgba(255, 212, 0, 0.08); border: 1px solid var(--amarillo);
+        }
+        .terminos h2 { margin: 24px 0 8px; font-size: 1.05rem; color: var(--amarillo); }
+        .terminos p, .terminos li { line-height: 1.6; font-size: 0.95rem; }
+        .terminos ul { margin: 6px 0; padding-left: 22px; }
+
+        /* ---------- AL IMPRIMIR / GUARDAR COMO PDF ---------- */
+        /* Fondo blanco y letra negra para que se lea bien en papel; sin botones. */
+        @media print {
+            body { padding: 0; background: #fff; color: #000; }
+            .tarjeta { max-width: none; padding: 0; background: #fff; border: none; box-shadow: none; }
+            .marca h1, .terminos h2 { color: #000; }
+            .marca p, .fecha { color: #333; }
+            .avisoAcademico { background: #fff; border: 1px solid #000; }
+            .noImprimir { display: none; }
+            .terminos h2 { break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <main class="tarjeta">
+
+        <header class="marca">
+            <img src="img/logo_tachira.png" alt="Escudo Deportivo Táchira">
+            <div>
+                <h1>Términos y condiciones</h1>
+                <p>Portal del Socio - Deportivo Táchira</p>
+            </div>
+        </header>
+
+        <!-- Botones: no salen en el PDF (clase noImprimir) -->
+        <div class="acciones noImprimir">
+            <button type="button" id="botonDescargar" class="boton">Descargar PDF</button>
+            <button type="button" id="botonCerrar" class="botonSecundario">Cerrar y volver al registro</button>
+        </div>
+        <p class="pie noImprimir" id="ayudaCerrar" hidden>
+            Si la pestaña no se cerró, ciérrala tú: el registro sigue abierto en la otra pestaña.
+        </p>
+
+        <p class="fecha">Última actualización: 20 de octubre de 2026</p>
+
+        <div class="avisoAcademico">
+            <strong>Aviso académico:</strong> este portal es un proyecto de estudio del
+            Centro de Orientación y Gestión para el Trabajo (CEOGET). No es un sitio oficial
+            del Deportivo Táchira ni tiene relación con el club. Los datos que se registren
+            se usan solo para practicar y probar el sistema.
+        </div>
+
+        <section class="terminos">
+
+            <h2>1. Objeto</h2>
+            <p>
+                Estos términos regulan el registro y el uso del Portal del Socio, donde la persona
+                registrada puede iniciar sesión, ver su carnet digital y consultar los beneficios
+                e información del club.
+            </p>
+
+            <h2>2. Aceptación</h2>
+            <p>
+                Al marcar la casilla "Acepto los términos y condiciones" y registrarse, la persona
+                declara que conoce estos términos y los acepta. El sistema guarda la fecha y la
+                hora de esa aceptación.
+            </p>
+
+            <h2>3. Requisitos para registrarse</h2>
+            <ul>
+                <li>Tener como mínimo <span data-regla="edad.minima">14</span> años.</li>
+                <li>
+                    Las personas menores de <span data-regla="edad.mayoria">18</span> años deben
+                    contar con la autorización de su padre, madre o representante legal para
+                    entregar sus datos personales.
+                </li>
+                <li>Registrar datos reales y propios. Cada documento, correo, usuario y celular solo puede usarse en una cuenta.</li>
+            </ul>
+
+            <h2>4. Datos que se recogen</h2>
+            <p>Para crear la cuenta se solicitan:</p>
+            <ul>
+                <li>Nombre completo y nombre de usuario.</li>
+                <li>Correo electrónico y número de celular.</li>
+                <li>Tipo y número de documento de identidad.</li>
+                <li>Fecha de nacimiento.</li>
+                <li>Contraseña, que se guarda cifrada y nunca en texto legible.</li>
+                <li>Fecha y hora de aceptación de estos términos.</li>
+            </ul>
+
+            <h2>5. Finalidad del tratamiento de los datos</h2>
+            <p>Los datos se usan únicamente para:</p>
+            <ul>
+                <li>Crear la cuenta y verificar la identidad del socio al iniciar sesión.</li>
+                <li>Mostrar el carnet digital y la información del Portal del Socio.</li>
+                <li>Comunicarse con el socio sobre su cuenta.</li>
+            </ul>
+            <p>Los datos no se venden ni se comparten con terceros.</p>
+
+            <h2>6. Derechos del titular (Ley 1581 de 2012)</h2>
+            <p>
+                De acuerdo con la Ley Estatutaria 1581 de 2012 de Colombia, sobre protección de
+                datos personales, el socio como titular de sus datos tiene derecho a:
+            </p>
+            <ul>
+                <li>Conocer, actualizar y rectificar sus datos personales.</li>
+                <li>Solicitar prueba de la autorización que entregó.</li>
+                <li>Ser informado sobre el uso que se les da a sus datos.</li>
+                <li>Revocar la autorización y pedir que sus datos se eliminen.</li>
+                <li>Acceder de forma gratuita a sus datos.</li>
+                <li>Presentar quejas ante la Superintendencia de Industria y Comercio.</li>
+            </ul>
+
+            <h2>7. Seguridad de la cuenta</h2>
+            <ul>
+                <li>La contraseña es personal; el socio no debe compartirla con nadie.</li>
+                <li>
+                    Después de <span data-regla="login.intentosMaximos">5</span> intentos fallidos de
+                    inicio de sesión, el acceso se bloquea durante
+                    <span data-regla="login.minutosBloqueo">1</span> minuto(s).
+                </li>
+                <li>
+                    La sesión se cierra sola después de
+                    <span data-regla="sesion.minutosInactividad">30</span> minutos sin actividad.
+                </li>
+                <li>Se recomienda cerrar sesión al terminar, sobre todo en computadores compartidos.</li>
+            </ul>
+
+            <h2>8. Obligaciones del socio</h2>
+            <ul>
+                <li>Entregar información verdadera y mantenerla actualizada.</li>
+                <li>Usar el portal de forma respetuosa y solo para los fines descritos.</li>
+                <li>No intentar acceder a cuentas de otras personas ni afectar el funcionamiento del sistema.</li>
+            </ul>
+
+            <h2>9. Conservación y eliminación de los datos</h2>
+            <p>
+                Los datos se conservan mientras la cuenta esté activa o mientras dure el proyecto
+                académico. El socio puede pedir en cualquier momento que su cuenta y sus datos se
+                eliminen.
+            </p>
+
+            <h2>10. Cambios a estos términos</h2>
+            <p>
+                Estos términos pueden actualizarse. Cuando eso pase, se cambiará la fecha de
+                "Última actualización" que aparece al inicio de este documento.
+            </p>
+
+        </section>
+    </main>
+
+    <script src="/shared/reglas.js"></script>
+    <script>
+        // ---------- VALORES DESDE reglas.js (nada cableado) ----------
+        // Cada <span data-regla="grupo.clave"> se llena con el valor de REGLAS.
+        // Si reglas.js no carga, queda el numero escrito en el HTML.
+        (function ()
+        {
+            let R = window.REGLAS;
+            if (!R) return;
+
+            document.querySelectorAll("[data-regla]").forEach(function (span)
+            {
+                let partes = span.dataset.regla.split(".");
+                let valor = R[partes[0]] ? R[partes[0]][partes[1]] : undefined;
+                if (valor !== undefined) span.textContent = valor;
+            });
+        })();
+
+        // ---------- DESCARGAR ----------
+        // Abre la ventana de imprimir; ahi se elige "Guardar como PDF".
+        document.querySelector("#botonDescargar").addEventListener("click", function ()
+        {
+            window.print();
+        });
+
+        // ---------- CERRAR ----------
+        // Cierra esta pestana. Si el navegador no lo permite, se muestra la ayuda.
+        document.querySelector("#botonCerrar").addEventListener("click", function ()
+        {
+            window.close();
+            setTimeout(function ()
+            {
+                document.querySelector("#ayudaCerrar").hidden = false;
+            }, 300);
+        });
+    </script>
+</body>
+</html>
